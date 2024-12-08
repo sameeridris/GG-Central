@@ -12,6 +12,12 @@ const SingleThought = () => {
   const { loading, data } = useQuery(QUERY_SINGLE_THOUGHT, {
     variables: { thoughtId: thoughtId },
   });
+  // example data:
+  const exampleGame = {
+    title: "the walking dead game",
+    imageURL: "https://m.media-amazon.com/images/M/MV5BNDRhZjkyNWItMjkzOS00ZjUwLTk4NDctODY2ZjZkZGE4OGY2XkEyXkFqcGc@._V1_.jpg",
+    description: "the walking dead game with clem and aj lol"
+  }
 
   const thought = data?.thought || {};
 
@@ -20,26 +26,10 @@ const SingleThought = () => {
   }
   return (
     <div className="my-3">
-      <h3 className="card-header bg-dark text-light p-2 m-0">
-        {thought.thoughtAuthor} <br />
-        <span style={{ fontSize: '1rem' }}>
-          had this thought on {new Date(Number(thought.createdAt)).toLocaleString()}
-        </span>
-      </h3>
-      <div className="bg-light py-4">
-        <blockquote
-          className="p-4"
-          style={{
-            fontSize: '1.5rem',
-            fontStyle: 'italic',
-            border: '2px dotted #1a1a1a',
-            lineHeight: '1.5',
-          }}
-        >
-          {thought.thoughtText}
-        </blockquote>
-      </div>
-
+      {/*this is where we would put the game and its information, and below is the comments. */}
+      <img src={exampleGame.imageURL} alt="" />
+      <h1>{exampleGame.title}</h1>
+      <p>{exampleGame.description}</p>
       <div className="my-5">
         <CommentList comments={thought.comments} />
       </div>
