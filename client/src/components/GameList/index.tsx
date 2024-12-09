@@ -1,15 +1,21 @@
+import { useState } from "react";
+
 interface Game {
   _id: string;
-  createdAt: string;
-  commentText: string;
+  img: string;
 }
 
 interface CommentListProps {
   comments?: Comment[];
 }
 
-const CommentList: React.FC<CommentListProps> = () => {
+const GameList: React.FC<CommentListProps> = () => {
+  const [gameList, setGameList] = useState([])
 
+  function getGameListFromDatabase(): Game[] | null {
+    // get user's game list from database
+    return null
+  }
 
   return (
     <>
@@ -18,4 +24,4 @@ const CommentList: React.FC<CommentListProps> = () => {
   );
 };
 
-export default CommentList;
+export default GameList;

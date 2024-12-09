@@ -15,7 +15,6 @@ const Header = () => {
           <Link className="text-light" to="/">
             <h1 className="m-0">GG Central</h1>
           </Link>
-          <p className="m-0">Organize your games.</p>
         </div>
         <div>
           {/* Checking if the user is logged in to conditionally render profile link and logout button */}
