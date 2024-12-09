@@ -1,0 +1,91 @@
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f4f4f4;
+  }
+  
+  .login-box {
+    background: #ffffff;
+    padding: 60px; /* Increased padding */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 400px; /* Increased width */
+    text-align: center;
+  }
+  
+  .login-title {
+    margin-bottom: 20px;
+    font-size: 2.5rem; /* Increased font size */
+    color: #333;
+  }
+  
+  .form-group {
+    margin-bottom: 20px; /* Increased margin */
+    text-align: left;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+  }
+  
+  .form-group input {
+    width: 100%; /* Set width to 100% */
+    padding: 15px; /* Increase padding for larger input boxes */
+    font-size: 1.2em; /* Increase font size */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .password-wrapper {
+    position: relative;
+  }
+  
+  .password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  
+  .btn {
+    width: 100%;
+    padding: 15px; /* Increased padding */
+    margin-bottom: 15px; /* Increased margin */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .btn-login {
+    background: #333; /* Black color */
+    color: white;
+  }
+  
+  .btn-login:hover {
+    background: #555;
+  }
+  
+  .btn-secondary {
+    background: #ffffff; /* White color */
+    color: black;
+    border: 2px solid black;
+  }
+  
+  .btn-secondary:hover {
+    background: #f0f0f0;
+  }
+  
+  .error-message {
+    margin-top: 15px; /* Increased margin */
+    padding: 15px; /* Increased padding */
+    background: #ffdddd; /* Red color */
+    color: #a00;
+    border-radius: 5px;
+  }
+  
