@@ -1,10 +1,10 @@
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
-import { QUERY_THOUGHTS } from '../utils/queries.ts';
+import { QUERY_THOUGHTS } from '../utils/queries';
 
-import ThoughtList from '../components/ThoughtList/index.tsx';
-import ThoughtForm from '../components/ThoughtForm/index.tsx';
+import ThoughtList from '../components/CommentList/index.js';
+import ThoughtForm from '../components/CommentForm/index.js';
 
 const SingleThought = () => {
   const { loading, data } = useQuery(QUERY_THOUGHTS);
