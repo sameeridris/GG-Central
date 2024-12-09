@@ -1,32 +1,68 @@
-import { useQuery } from '@apollo/client';
-
-import ThoughtList from '../components/ThoughtList/index.tsx';
-import ThoughtForm from '../components/ThoughtForm/index.tsx';
-
-import { QUERY_THOUGHTS } from '../utils/queries.ts';
+import '../style/Home.css'; // Ensure correct import path
+import { Link } from 'react-router-dom';
+// these arrays of images would come from the database and from the api. 
+const startImgArray = ["https://m.media-amazon.com/images/M/MV5BNDRhZjkyNWItMjkzOS00ZjUwLTk4NDctODY2ZjZkZGE4OGY2XkEyXkFqcGc@._V1_.jpg", "https://howlongtobeat.com/games/5203_League_of_Legends.jpg"];
+const loadingImgArray = ["https://www.lego.com/cdn/cs/set/assets/blt0f703dfbce999d88/Video-games-Juno-Carousel-card.jpg?fit=crop&format=jpg&quality=80&width=635&height=440&dpr=1"];
+const playedImgArray = ["https://image.api.playstation.com/vulcan/ap/rnd/202110/2000/aGhopp3MHppi7kooGE2Dtt8C.png"];
 
 const Home = () => {
-  const { loading, data } = useQuery(QUERY_THOUGHTS);
-  const thoughts = data?.thoughts || [];
 
   return (
     <main>
-      <div className="flex-row justify-center">
-        <div
-          className="col-12 col-md-10 mb-3 p-3"
-          style={{ border: '1px dotted #1a1a1a' }}
-        >
-          <ThoughtForm />
+      <div className="home-container">
+        <div className="column-wrapper">
+          <h2>Press Start</h2>
+          <div className="column not-yet-played">
+            {startImgArray &&
+              startImgArray.map((img) => (
+                <div className="card mb-3">
+                  {/* Create a link to this thought's page to view its comments using `<Link>` component */}
+                  <img src={img} width={'100%'} alt="" />
+                  <Link
+                    className="btn btn-primary btn-block btn-squared"
+                    to={`/thoughts/6754f48c45fb31fb1e09facd`}
+                  >
+                    Join the discussion on this game.
+                  </Link>
+                </div>
+              ))}
+          </div>
         </div>
-        <div className="col-12 col-md-8 mb-3">
-          {loading ? (
-            <div>Loading...</div>
-          ) : (
-            <ThoughtList
-              thoughts={thoughts}
-              title="Some Feed for Thought(s)..."
-            />
-          )}
+        <div className="column-wrapper">
+          <h2>Loading</h2>
+          <div className="column playing">
+            {loadingImgArray &&
+              loadingImgArray.map((img) => (
+                <div className="card mb-3">
+                  {/* Create a link to this thought's page to view its comments using `<Link>` component */}
+                  <img src={img} width={'100%'} alt="" />
+                  <Link
+                    className="btn btn-primary btn-block btn-squared"
+                    to={`/thoughts/6754f48c45fb31fb1e09facd`}
+                  >
+                    Join the discussion on this game.
+                  </Link>
+                </div>
+              ))}
+          </div>
+        </div>
+        <div className="column-wrapper">
+          <h2>Well Played</h2>
+          <div className="column played">
+            {playedImgArray &&
+              playedImgArray.map((img) => (
+                <div className="card mb-3">
+                  {/* Create a link to this thought's page to view its comments using `<Link>` component */}
+                  <img src={img} width={'100%'} alt="" />
+                  <Link
+                    className="btn btn-primary btn-block btn-squared"
+                    to={`/thoughts/6754f48c45fb31fb1e09facd`}
+                  >
+                    Join the discussion on this game.
+                  </Link>
+                </div>
+              ))}
+          </div>
         </div>
       </div>
     </main>

@@ -27,7 +27,7 @@ const ThoughtList: React.FC<ThoughtListProps> = ({ thoughts, title }) => {
             <h4 className="card-header bg-primary text-light p-2 m-0">
               {thought.thoughtAuthor} <br />
               <span style={{ fontSize: '1rem' }}>
-                had this thought on {new Date(Number(thought.createdAt)).toLocaleString()}
+                commented on {new Date(Number(thought.createdAt)).toLocaleString()}
               </span>
             </h4>
             <div className="card-body bg-light p-2">

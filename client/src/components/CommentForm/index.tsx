@@ -14,8 +14,8 @@ const CommentForm = ({ thoughtId }: any) => {
 
     try {
       await addComment({
-        variables: { 
-          thoughtId, commentText 
+        variables: {
+          thoughtId, commentText
         }
       });
 
@@ -36,11 +36,10 @@ const CommentForm = ({ thoughtId }: any) => {
 
   return (
     <div>
-      <h4>What are your thoughts on this thought?</h4>
+      <h4>What are your thoughts on this game?</h4>
       <p
-        className={`m-0 ${
-          characterCount === 280 || error ? 'text-danger' : ''
-        }`}
+        className={`m-0 ${characterCount === 280 || error ? 'text-danger' : ''
+          }`}
       >
         Character Count: {characterCount}/280
         {error && <span className="ml-2">Something went wrong...</span>}

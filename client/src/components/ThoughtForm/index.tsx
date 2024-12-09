@@ -13,24 +13,26 @@ const ThoughtForm = () => {
   const [characterCount, setCharacterCount] = useState(0);
 
   const [addThought, { error }] = useMutation
-  (ADD_THOUGHT, {
-    refetchQueries: [
-      QUERY_THOUGHTS,
-      'getThoughts',
-      QUERY_ME,
-      'me'
-    ]
-  });
+    (ADD_THOUGHT, {
+      refetchQueries: [
+        QUERY_THOUGHTS,
+        'getThoughts',
+        QUERY_ME,
+        'me'
+      ]
+    });
 
   const handleFormSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
     try {
       await addThought({
-        variables: { input:{
-          thoughtText,
-          thoughtAuthor: Auth.getProfile().data.username,
-        }},
+        variables: {
+          input: {
+            thoughtText,
+            thoughtAuthor: Auth.getProfile().data.username,
+          }
+        },
       });
 
       setThoughtText('');
@@ -50,14 +52,13 @@ const ThoughtForm = () => {
 
   return (
     <div>
-      <h3>What's on your techy mind?</h3>
+      <h3>What do you think about this game?</h3>
 
       {Auth.loggedIn() ? (
         <>
           <p
-            className={`m-0 ${
-              characterCount === 280 || error ? 'text-danger' : ''
-            }`}
+            className={`m-0 ${characterCount === 280 || error ? 'text-danger' : ''
+              }`}
           >
             Character Count: {characterCount}/280
           </p>
@@ -90,7 +91,7 @@ const ThoughtForm = () => {
         </>
       ) : (
         <p>
-          You need to be logged in to share your thoughts. Please{' '}
+          You need to be logged in comment on this game. Please{' '}
           <Link to="/login">login</Link> or <Link to="/signup">signup.</Link>
         </p>
       )}

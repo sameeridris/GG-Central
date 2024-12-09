@@ -11,16 +11,18 @@
     "skipLibCheck": true,
     /* Bundler mode */
     "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
     "jsx": "react-jsx",
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    /* Output options */
+    "outDir": "./dist",         // Specifies the output directory for compiled files
+    "rootDir": "./src",         // Specifies the root directory of input files
+    "sourceMap": true           // Generates source map files for debugging
   },
   "include": [
     "src"
