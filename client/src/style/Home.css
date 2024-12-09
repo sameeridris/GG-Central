@@ -20,7 +20,7 @@
 .column {
   width: 100%;
   background: #f4f4f4;
-  padding: 150px;
+  padding: 20px;
   border-radius: none;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
