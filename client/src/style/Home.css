@@ -1,0 +1,49 @@
+/* Home.css */
+
+.home-container {
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.column-wrapper {
+  width: 32%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.column-wrapper h2 {
+  margin-bottom: 10px;
+}
+
+.column {
+  width: 100%;
+  background: #f4f4f4;
+  padding: 150px;
+  border-radius: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.column:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.not-yet-played {
+  background: #ffdddd;
+}
+
+.playing {
+  background: #ddddff;
+}
+
+.played {
+  background: #ddffdd;
+}
+
+.column p {
+  text-align: center;
+  font-size: 1.1em;
+}
