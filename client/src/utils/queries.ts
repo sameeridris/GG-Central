@@ -58,3 +58,28 @@ export const QUERY_ME = gql`
     }
   }
 `;
+
+export const SEARCH_GAMES = gql`
+  query searchGames($name: String!) {
+    searchGames(name: $name) {
+      description
+      id
+      imageUrl
+      name
+      rating
+    }
+  }
+`;
+
+
+export const QUERY_SINGLE_GAME = gql`
+  query game($gameId: ID!) {
+    game(gameId: $gameId) {
+      id
+      name
+      description
+      rating
+      imageUrl
+    }
+  }
+`;
