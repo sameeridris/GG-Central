@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { type MouseEvent } from 'react';
 import Auth from '../../utils/auth';
+import './index.css'; // Import the CSS file
 
 const Header = () => {
   const logout = (event: MouseEvent<HTMLButtonElement>) => {
@@ -8,38 +9,37 @@ const Header = () => {
     // Logs the user out by calling the logout method from Auth
     Auth.logout();
   };
+
   return (
-    <header className="bg-primary text-light mb-4 py-3 flex-row align-center">
-      <div className="container flex-row justify-space-between-lg justify-center align-center">
-        <div>
-          <Link className="text-light" to="/">
-            <h1 className="m-0">Your Games</h1>
-          </Link>
-          <p className="m-0">Organize your games.</p>
-        </div>
-        <div>
-          {/* Checking if the user is logged in to conditionally render profile link and logout button */}
-          {Auth.loggedIn() ? (
-            <>
-              <Link className="btn btn-lg btn-info m-2" to="/me">
-                {/* Retrieving the logged-in user's profile to display the username */}
-                {Auth.getProfile().data.username}'s profile
-              </Link>
-              <button className="btn btn-lg btn-light m-2" onClick={logout}>
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <Link className="btn btn-lg btn-info m-2" to="/login">
-                Login
-              </Link>
-              <Link className="btn btn-lg btn-light m-2" to="/signup">
-                Signup
-              </Link>
-            </>
-          )}
-        </div>
+    <header className="header-container">
+      <div className="header-title">
+        <Link className="text-light" to="/">
+          <h1 className="your-games">GG Central</h1>
+        </Link>
+      </div>
+      <div className="header-search">
+        <input type="text" placeholder="Search for a game..." />
+      </div>
+      <div className="header-auth">
+        {Auth.loggedIn() ? (
+          <>
+            <Link className="btn btn-info" to="/me">
+              {Auth.getProfile().data.username}'s Profile
+            </Link>
+            <button className="btn btn-light" onClick={logout}>
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <Link className="btn btn-info" to="/login">
+              Sign In
+            </Link>
+            <Link className="btn btn-light" to="/signup">
+              Sign Up
+            </Link>
+          </>
+        )}
       </div>
     </header>
   );

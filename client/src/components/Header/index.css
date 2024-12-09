@@ -1,0 +1,39 @@
+/* Header.css */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 10px 20px;
+    color: white;
+  }
+  
+  .header-title h1 {
+    font-family: "Modak", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    color: rgb(0, 0, 0);
+    font-size: 2.5rem; /* Adjust the size as needed */
+  }
+  
+  .header-search input {
+    width: 400px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .header-auth .btn {
+    margin: 0 10px;
+  }
+  
+  .header-auth .btn-info {
+    background-color: #000000;
+    color: white;
+  }
+  
+  .header-auth .btn-light {
+    background-color: #f8f9fa;
+    color: black;
+  }
+  

@@ -1,32 +1,27 @@
-import { useQuery } from '@apollo/client';
-
-import ThoughtList from '../components/ThoughtList/index.tsx';
-import ThoughtForm from '../components/ThoughtForm/index.tsx';
-
-import { QUERY_THOUGHTS } from '../utils/queries.ts';
+import '../style/Home.css'; // Ensure correct import path
 
 const Home = () => {
-  const { loading, data } = useQuery(QUERY_THOUGHTS);
-  const thoughts = data?.thoughts || [];
 
   return (
     <main>
-      <div className="flex-row justify-center">
-        <div
-          className="col-12 col-md-10 mb-3 p-3"
-          style={{ border: '1px dotted #1a1a1a' }}
-        >
-          <ThoughtForm />
+      <div className="home-container">
+        <div className="column-wrapper">
+          <h2>Press Start</h2>
+          <div className="column not-yet-played">
+            <p>*here a game pulled from the api will be displayed*</p> {/* Placeholder */}
+          </div>
         </div>
-        <div className="col-12 col-md-8 mb-3">
-          {loading ? (
-            <div>Loading...</div>
-          ) : (
-            <ThoughtList
-              thoughts={thoughts}
-              title="Some Feed for Thought(s)..."
-            />
-          )}
+        <div className="column-wrapper">
+          <h2>Loading</h2>
+          <div className="column playing">
+            <p>*here a game pulled from the api will be displayed*</p> {/* Placeholder */}
+          </div>
+        </div>
+        <div className="column-wrapper">
+          <h2>Well Played</h2>
+          <div className="column played">
+            <p>*here a game pulled from the api will be displayed*</p> {/* Placeholder */}
+          </div>
         </div>
       </div>
     </main>
