@@ -1,4 +1,4 @@
-import { Thought, User } from '../models/index.js';
+import { Thought, User, Game } from '../models/index.js';
 import { signToken, AuthenticationError } from '../utils/auth.js';
 import { fetchGameData, searchGamesByName } from '../services/igdbServices.js';
 
@@ -44,6 +44,12 @@ interface GameArgs {
   gameId: string;
 }
 
+interface AddGameArgs {
+  input: {
+    name: string;
+  }
+}
+
 const resolvers = {
   Query: {
     users: async () => {
@@ -51,6 +57,9 @@ const resolvers = {
     },
     user: async (_parent: any, { username }: UserArgs) => {
       return User.findOne({ username }).populate('thoughts');
+    },
+    usergames: async () => {
+      return User.find(). populate('games');
     },
     thoughts: async () => {
       return await Thought.find().sort({ createdAt: -1 });
@@ -189,7 +198,35 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
+    addGames: async (_parent: any, { input }: AddGameArgs, context: any) => {
+      if (context.user) {
+        const game = await Game.create({ ...input });
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { games: game._id } }
+        );
+        return game;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    removeGame: async (_parent: any, { gameId }: GameArgs, context: any) => {
+      if (context.user) {
+        const game = await Game.findOneAndDelete({
+          _id: gameId,
+          thoughtAuthor: context.user.username,
+        });
+        if (!game) {
+          throw new AuthenticationError('Thought not found');
+        }
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { thoughts: game._id } }
+        );
+        return game;
+      }
+      throw new AuthenticationError('You need to be logged in!');
   },
+},
 };
 
 export default resolvers;

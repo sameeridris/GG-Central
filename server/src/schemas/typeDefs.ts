@@ -5,6 +5,7 @@ const typeDefs = `
     email: String
     password: String
     thoughts: [Thought]!
+    games: [Game]!
   }
 
   type Thought {
@@ -58,6 +59,7 @@ const typeDefs = `
   type Query {
     users: [User]
     user(username: String!): User
+    usergames: [User]
     thoughts: [Thought]!
     thought(thoughtId: ID!): Thought
     me: User
