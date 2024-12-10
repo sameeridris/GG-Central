@@ -1,14 +1,64 @@
-import { Link } from 'react-router-dom';
-import { type MouseEvent } from 'react';
+
+import React, { useState, useCallback, useRef, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { MouseEvent } from 'react';
+import { useLazyQuery } from '@apollo/client';
+import debounce from 'lodash.debounce';
 import Auth from '../../utils/auth';
-import './index.css'; // Import the CSS file
+import { SEARCH_GAMES } from '../../utils/queries';
+import './index.css'; 
 
 const Header = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [searchGames, { loading, error, data }] = useLazyQuery(SEARCH_GAMES);
+  const navigate = useNavigate();
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  const debouncedSearch = useCallback(
+    debounce((value: string) => {
+      if (value.trim() !== '') {
+        searchGames({ variables: { name: value } });
+        setShowSuggestions(true);
+      } else {
+        setShowSuggestions(false);
+      }
+    }, 1000),
+    [searchGames]
+  );
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setSearchTerm(value);
+    debouncedSearch(value);
+  };
+
+  const handleSelectGame = (game: any) => {
+    navigate(`/game/${game.id}`);
+    setSearchTerm('');
+    setShowSuggestions(false);
+  };
+
   const logout = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    // Logs the user out by calling the logout method from Auth
     Auth.logout();
   };
+
+  // Close suggestions when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target as Node)
+      ) {
+        setShowSuggestions(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside as any);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside as any);
+    };
+  }, [wrapperRef]);
 
   return (
     <header className="header-container">
@@ -17,8 +67,46 @@ const Header = () => {
           <h1 className="your-games">GG Central</h1>
         </Link>
       </div>
-      <div className="header-search">
-        <input type="text" placeholder="Search for a game..." />
+      <div className="header-search" ref={wrapperRef}>
+        <input
+          type="text"
+          placeholder="Search for a game..."
+          value={searchTerm}
+          onChange={handleInputChange}
+        />
+        {showSuggestions && (
+          <div className="suggestions-container">
+            {loading && <p className="search-loading">Loading...</p>}
+            {error && <p className="search-error">Error loading suggestions.</p>}
+            {data && data.searchGames && data.searchGames.length > 0 && (
+              <ul className="suggestions-list">
+                {data.searchGames.map((game: any) => (
+                  <li
+                    key={game.id}
+                    className="suggestion-item"
+                    onClick={() => handleSelectGame(game)}
+                  >
+                    {game.imageUrl ? (
+                      <img
+                        src={game.imageUrl}
+                        alt={game.name}
+                        className="game-image"
+                      />
+                    ) : (
+                      <div className="game-image-placeholder"></div>
+                    )}
+                    <div className="game-details">
+                      <h4>{game.name}</h4>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {data && data.searchGames && data.searchGames.length === 0 && (
+              <p className="no-results">No results found.</p>
+            )}
+          </div>
+        )}
       </div>
       <div className="header-auth">
         {Auth.loggedIn() ? (

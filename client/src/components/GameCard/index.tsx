@@ -1,8 +1,8 @@
-interface Game {
-  _id: string;
-  createdAt: string;
-  commentText: string;
-}
+// interface Game {
+//   _id: string;
+//   createdAt: string;
+//   commentText: string;
+// }
 
 interface CommentListProps {
   comments?: Comment[];
