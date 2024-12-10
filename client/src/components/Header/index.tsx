@@ -1,4 +1,3 @@
-// src/components/Header/index.tsx
 
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -7,7 +6,7 @@ import { useLazyQuery } from '@apollo/client';
 import debounce from 'lodash.debounce';
 import Auth from '../../utils/auth';
 import { SEARCH_GAMES } from '../../utils/queries';
-import './index.css'; // Import the CSS file
+import './index.css'; 
 
 const Header = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -24,7 +23,8 @@ const Header = () => {
       } else {
         setShowSuggestions(false);
       }
-    }, 300), []
+    }, 1000),
+    [searchGames]
   );
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,7 +35,7 @@ const Header = () => {
 
   const handleSelectGame = (game: any) => {
     navigate(`/game/${game.id}`);
-    setSearchTerm(game.name);
+    setSearchTerm('');
     setShowSuggestions(false);
   };
 
@@ -44,9 +44,13 @@ const Header = () => {
     Auth.logout();
   };
 
+  // Close suggestions when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target as Node)
+      ) {
         setShowSuggestions(false);
       }
     }
@@ -63,41 +67,46 @@ const Header = () => {
           <h1 className="your-games">GG Central</h1>
         </Link>
       </div>
-      <div className="header-search">
-        <div className="search-input-wrapper" ref={wrapperRef}>
-          <input
-            type="text"
-            placeholder="Search for a game..."
-            value={searchTerm}
-            onChange={handleInputChange}
-          />
-          {showSuggestions && (
-            <div className="suggestions-container">
-              {loading && <p className="search-loading">Loading...</p>}
-              {error && <p className="search-error">Error: {error.message}</p>}
-              {data && data.searchGames && data.searchGames.length > 0 && (
-                <ul className="suggestions-list">
-                  {data.searchGames.map((game: any) => (
-                    <li
-                      key={game.id}
-                      className="suggestion-item"
-                      onClick={() => handleSelectGame(game)}
-                    >
-                      <img src={game.imageUrl} alt={game.name} className="game-image" />
-                      <div className="game-details">
-                        <h4>{game.name}</h4>
-                        {game.rating && <p>Rating: {game.rating}</p>}
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              )}
-              {data && data.searchGames && data.searchGames.length === 0 && (
-                <p className="no-results">No results found.</p>
-              )}
-            </div>
-          )}
-        </div>
+      <div className="header-search" ref={wrapperRef}>
+        <input
+          type="text"
+          placeholder="Search for a game..."
+          value={searchTerm}
+          onChange={handleInputChange}
+        />
+        {showSuggestions && (
+          <div className="suggestions-container">
+            {loading && <p className="search-loading">Loading...</p>}
+            {error && <p className="search-error">Error loading suggestions.</p>}
+            {data && data.searchGames && data.searchGames.length > 0 && (
+              <ul className="suggestions-list">
+                {data.searchGames.map((game: any) => (
+                  <li
+                    key={game.id}
+                    className="suggestion-item"
+                    onClick={() => handleSelectGame(game)}
+                  >
+                    {game.imageUrl ? (
+                      <img
+                        src={game.imageUrl}
+                        alt={game.name}
+                        className="game-image"
+                      />
+                    ) : (
+                      <div className="game-image-placeholder"></div>
+                    )}
+                    <div className="game-details">
+                      <h4>{game.name}</h4>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {data && data.searchGames && data.searchGames.length === 0 && (
+              <p className="no-results">No results found.</p>
+            )}
+          </div>
+        )}
       </div>
       <div className="header-auth">
         {Auth.loggedIn() ? (

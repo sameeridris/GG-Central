@@ -1,6 +1,5 @@
-import '../style/Home.css'; // Ensure correct import path
+import '../style/Home.css'; 
 import { Link } from 'react-router-dom';
-// these arrays of images would come from the database and from the api. 
 const startImgArray = ["https://m.media-amazon.com/images/M/MV5BNDRhZjkyNWItMjkzOS00ZjUwLTk4NDctODY2ZjZkZGE4OGY2XkEyXkFqcGc@._V1_.jpg", "https://howlongtobeat.com/games/5203_League_of_Legends.jpg"];
 const loadingImgArray = ["https://www.lego.com/cdn/cs/set/assets/blt0f703dfbce999d88/Video-games-Juno-Carousel-card.jpg?fit=crop&format=jpg&quality=80&width=635&height=440&dpr=1"];
 const playedImgArray = ["https://image.api.playstation.com/vulcan/ap/rnd/202110/2000/aGhopp3MHppi7kooGE2Dtt8C.png"];

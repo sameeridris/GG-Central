@@ -67,15 +67,16 @@ const resolvers = {
     game: async (_parent: any, { gameId }: GameArgs) => {
       try {
         console.log(`Resolver fetching game with ID: ${gameId}`);
-        const gameDataArray = await fetchGameData(gameId);
-        if (gameDataArray) {
-          const gameData = gameDataArray;
+        const gameData = await fetchGameData(gameId);
+        if (gameData) {
           return {
             id: gameData.id,
             name: gameData.name,
             description: gameData.summary,
             rating: gameData.rating,
-            imageUrl: gameData.cover ? gameData.cover.url : null,
+            imageUrl: gameData.cover
+              ? `https:${gameData.cover.url.replace('t_thumb', 't_1080p')}`
+              : null,
           };
         } else {
           return null;
@@ -85,6 +86,7 @@ const resolvers = {
         throw new Error('Failed to fetch game data');
       }
     },
+    
     searchGames: async (_parent: any, { name }: { name: string }) => {
       try {
         console.log(`Resolver received search query for: ${name}`);

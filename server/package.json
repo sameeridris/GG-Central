@@ -4,12 +4,17 @@
   "description": "",
   "main": "server.js",
   "type": "module",
-  "scripts": {
-    "build": "tsc",
-    "start": "node dist/server.js",
-    "seed": "node dist/seeds/seed.js",
-    "watch": "nodemon dist/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+ "scripts": {
+    "build": "npx tsc",
+    "start": "npm run build && node dist/server.js --ignore client",
+    "watch": "npx nodemon",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed": "node dist/seeds/index.js"
+  },
+  "nodemonConfig": {
+    "watch": ["src"],
+    "ext": "ts,json,js",
+    "exec": "npx tsc && node dist/server.js"
   },
   "keywords": [],
   "author": "",

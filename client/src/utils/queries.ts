@@ -62,15 +62,12 @@ export const QUERY_ME = gql`
 export const SEARCH_GAMES = gql`
   query searchGames($name: String!) {
     searchGames(name: $name) {
-      description
       id
-      imageUrl
       name
-      rating
+      imageUrl
     }
   }
 `;
-
 
 export const QUERY_SINGLE_GAME = gql`
   query game($gameId: ID!) {
