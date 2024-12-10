@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
-// import ThoughtList from '../components/CommentList/index.js';
-// import ThoughtForm from '../components/CommentForm/index.js';
+import ThoughtList from '../components/CommentList/index.js';
+import ThoughtForm from '../components/CommentForm/index.js';
 import { QUERY_SINGLE_GAME } from '../utils/queries';
 
 const SingleGame = () => {
@@ -16,13 +16,28 @@ const SingleGame = () => {
   }
 
   const game = data?.game || {};
-console.log(game)
+  console.log(game)
   return (
-    <div className="game-details-container my-3">
-      <img src={game.imageUrl} alt={game.name} />
-      <h1>{game.name}</h1>
+    <div className="my-3">
+      <img src={game.imageURL} alt="" />
+      <h1>{game.title}</h1>
       <p>{game.description}</p>
-      {game.rating && <p>Rating: {game.rating}</p>}
+      <div
+        className="col-12 col-md-10 mb-3 p-3"
+        style={{ border: '1px dotted #1a1a1a' }}
+      >
+        <ThoughtForm />
+      </div>
+      <div className="col-12 col-md-8 mb-3">
+        {loading ? (
+          <div>Loading...</div>
+        ) : (
+          <ThoughtList
+            thoughts={thoughts}
+            title="Comment(s) on this game..."
+          />
+        )}
+      </div>
     </div>
   );
 };

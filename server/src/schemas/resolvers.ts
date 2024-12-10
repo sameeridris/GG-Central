@@ -44,6 +44,10 @@ interface GameArgs {
   gameId: string;
 }
 
+interface RemoveGameArgs {
+  gameId: string;
+}
+
 const resolvers = {
   Query: {
     users: async () => {

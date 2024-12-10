@@ -19,6 +19,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/lodash.debounce": "^4.0.9",
     "concurrently": "^8.2.2",
     "wait-on": "^7.2.0"
   },

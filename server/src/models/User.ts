@@ -6,8 +6,9 @@ interface IUser extends Document {
   username: string;
   email: string;
   password: string;
-  thoughts: Schema.Types.ObjectId[];
+  thoughts: Schema.Types.ObjectId[]; // this should show all comments
   isCorrectPassword(password: string): Promise<boolean>;
+  games: Schema.Types.ObjectId[];
 }
 
 // Define the schema for the User document
@@ -36,6 +37,12 @@ const userSchema = new Schema<IUser>(
         ref: 'Thought',
       },
     ],
+    games: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Game',
+      }
+    ]
   },
   {
     timestamps: true,
