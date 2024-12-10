@@ -1,39 +1,98 @@
 /* Header.css */
+
 .header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #ffffff;
-    padding: 10px 20px;
-    color: white;
-  }
-  
-  .header-title h1 {
-    font-family: "Modak", system-ui;
-    font-weight: 400;
-    font-style: normal;
-    color: rgb(0, 0, 0);
-    font-size: 2.5rem; /* Adjust the size as needed */
-  }
-  
-  .header-search input {
-    width: 400px;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  
-  .header-auth .btn {
-    margin: 0 10px;
-  }
-  
-  .header-auth .btn-info {
-    background-color: #000000;
-    color: white;
-  }
-  
-  .header-auth .btn-light {
-    background-color: #f8f9fa;
-    color: black;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 10px 20px;
+  color: white;
+  position: relative; /* Ensure header is the positioning context */
+  z-index: 1; /* Ensure the header stays above other content */
+}
+
+.header-title h1 {
+  font-family: "Modak", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  color: rgb(0, 0, 0);
+  font-size: 2.5rem; /* Adjust the size as needed */
+}
+
+.header-search {
+  position: relative; /* Positioning context for the suggestions */
+}
+
+.header-search input {
+  width: 400px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.header-auth .btn {
+  margin: 0 10px;
+}
+
+.header-auth .btn-info {
+  background-color: #000000;
+  color: white;
+}
+
+.header-auth .btn-light {
+  background-color: #f8f9fa;
+  color: black;
+}
+
+/* Suggestions styling */
+.suggestions-container {
+  position: absolute;
+  top: 100%; /* Positions the container just below the input */
+  left: 0;
+  width: 400px; /* Match the width of the input */
+  max-height: 300px; /* Limit the height */
+  overflow-y: auto;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-top: none;
+  z-index: 2; /* Above the header, but can be adjusted */
+}
+
+.suggestions-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.suggestion-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.suggestion-item:hover {
+  background-color: #f0f0f0;
+}
+
+.game-image {
+  width: 50px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.game-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.game-details h4 {
+  margin: 0;
+  font-size: 1em;
+  color: #000; /* Black text */
+}
+
+.no-results, .search-loading, .search-error {
+  padding: 10px;
+  color: #000;
+}
