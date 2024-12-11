@@ -5,6 +5,9 @@ import { QUERY_SINGLE_GAME, ADD_GAME_TO_LIBRARY } from '../utils/queries';
 import Auth from '../utils/auth';
 import '../style/SingleGame.css';
 
+
+
+
 const SingleGame: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate(); // Define navigate here
@@ -66,9 +69,9 @@ const SingleGame: React.FC = () => {
           {game.rating && <p className="game-rating">Rating: {game.rating}</p>}
           {Auth.loggedIn() && (
             <div className="add-to-library-buttons">
-              <button onClick={() => handleAddToLibrary('Press Start')}>Add to Press Start</button>
-              <button onClick={() => handleAddToLibrary('Loading')}>Add to Loading</button>
-              <button onClick={() => handleAddToLibrary('Well Played')}>Add to Well Played</button>
+              <button id='press-start-button' onClick={() => handleAddToLibrary('Press Start')}>Add to Press Start</button>
+              <button id='loading-button' onClick={() => handleAddToLibrary('Loading')}>Add to Loading</button>
+              <button id='well-played-button' onClick={() => handleAddToLibrary('Well Played')}>Add to Well Played</button>
             </div>
           )}
         </div>
