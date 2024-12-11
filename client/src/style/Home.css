@@ -1,9 +1,10 @@
-/* Home.css */
+/* src/style/Home.css */
 
 .home-container {
   padding: 5px;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap; /* Ensure wrapping on smaller screens */
 }
 
 .column-wrapper {
@@ -11,16 +12,20 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 20px;
+  cursor: pointer; /* Add cursor pointer to indicate clickability */
 }
 
 .column-wrapper h2 {
   margin-bottom: 10px;
+  font-size: 1.5rem;
 }
 
 .column {
   width: 100%;
   background: #f4f4f4;
   padding: 20px;
+  min-height: 600px; /* Increase the height to cover more screen vertically */
   border-radius: none;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
@@ -43,7 +48,28 @@
   background: #ddffdd;
 }
 
-.column p {
-  text-align: center;
-  font-size: 1.1em;
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%; /* Fill the column height */
+}
+
+.empty-state p {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  text-align: center; /* Center the text */
+}
+
+@media (max-width: 1280px) {
+  .column {
+    min-height: 500px; /* Adjust for smaller screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .column-wrapper {
+    width: 100%;
+  }
 }
