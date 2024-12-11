@@ -54,3 +54,13 @@ export const ADD_COMMENT = gql`
     }
   }
 `;
+
+export const ADD_GAME_TO_LIBRARY = gql`
+  mutation addGameToLibrary($gameInput: GameInput!) {
+    addGameToLibrary(gameInput: $gameInput) {
+      id
+      name
+      imageUrl
+    }
+  }
+`;

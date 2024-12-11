@@ -6,13 +6,10 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { Routes, Route } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Home from './pages/Home'; 
-import SingleGame from './pages/SingleGame';
-
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -39,10 +36,8 @@ function App() {
       <div className="flex-column justify-flex-start min-100-vh">
         <Header />
         <div className="container">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/game/:id" element={<SingleGame />} />
-          </Routes>
+          {/* Replace <Routes>...</Routes> with <Outlet /> */}
+          <Outlet />
         </div>
         <Footer />
       </div>

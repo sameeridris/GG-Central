@@ -1,4 +1,4 @@
-/* Header.css */
+/* src/components/Header/index.css */
 
 .header-container {
   display: flex;
@@ -7,8 +7,8 @@
   background-color: #ffffff;
   padding: 10px 20px;
   color: white;
-  position: relative; /* Ensure header is the positioning context */
-  z-index: 1; /* Ensure the header stays above other content */
+  position: relative;
+  z-index: 1;
 }
 
 .header-title h1 {
@@ -16,11 +16,11 @@
   font-weight: 400;
   font-style: normal;
   color: rgb(0, 0, 0);
-  font-size: 2.5rem; /* Adjust the size as needed */
+  font-size: 2.5rem;
 }
 
 .header-search {
-  position: relative; /* Positioning context for the suggestions */
+  position: relative;
 }
 
 .header-search input {
@@ -47,15 +47,15 @@
 /* Suggestions styling */
 .suggestions-container {
   position: absolute;
-  top: 100%; /* Positions the container just below the input */
+  top: 100%;
   left: 0;
-  width: 400px; /* Match the width of the input */
-  max-height: 300px; /* Limit the height */
+  width: 400px;
+  max-height: 300px;
   overflow-y: auto;
   background-color: #ffffff;
   border: 1px solid #ccc;
   border-top: none;
-  z-index: 2; /* Above the header, but can be adjusted */
+  z-index: 2;
 }
 
 .suggestions-list {
@@ -89,10 +89,19 @@
 .game-details h4 {
   margin: 0;
   font-size: 1em;
-  color: #000; /* Black text */
+  color: #000;
 }
 
-.no-results, .search-loading, .search-error {
-  padding: 10px;
-  color: #000;
+.add-to-library-button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  margin-top: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-to-library-button:hover {
+  background-color: #218838;
 }
