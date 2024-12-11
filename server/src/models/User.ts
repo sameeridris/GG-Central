@@ -6,7 +6,11 @@ interface IUser extends Document {
   username: string;
   email: string;
   password: string;
-  thoughts: Schema.Types.ObjectId[];
+  games: {
+    pressStart: Schema.Types.ObjectId[];
+    loading: Schema.Types.ObjectId[];
+    wellPlayed: Schema.Types.ObjectId[];
+  };
   isCorrectPassword(password: string): Promise<boolean>;
 }
 
@@ -30,12 +34,26 @@ const userSchema = new Schema<IUser>(
       required: true,
       minlength: 5,
     },
-    thoughts: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Thought',
-      },
-    ],
+    games: {
+      pressStart: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'Game',
+        },
+      ],
+      loading: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'Game',
+        },
+      ],
+      wellPlayed: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'Game',
+        },
+      ],
+    },
   },
   {
     timestamps: true,
@@ -45,9 +63,10 @@ const userSchema = new Schema<IUser>(
 );
 
 userSchema.pre<IUser>('save', async function (next) {
-  if (this.isNew || this.isModified('password')) {
+  const user = this as IUser;
+  if (user.isNew || user.isModified('password')) {
     const saltRounds = 10;
-    this.password = await bcrypt.hash(this.password, saltRounds);
+    user.password = await bcrypt.hash(user.password, saltRounds);
   }
 
   next();

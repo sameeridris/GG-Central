@@ -44,9 +44,18 @@ const typeDefs = `
     rating: Float
     imageUrl: String
   }
+  
+  input GameInput{
+    name: String!
+    description: String!
+    rating: String!
+    imageURL: String!
+    status: String!
+  }
 
   type Query {
     users: [User]
+    usergames: [Game]
     user(username: String!): User
     thoughts: [Thought]!
     thought(thoughtId: ID!): Thought
@@ -57,12 +66,16 @@ const typeDefs = `
 
   type Mutation {
     addUser(input: UserInput!): Auth
+    addGame(input: GameInput!): Game
     login(email: String!, password: String!): Auth
     addThought(input: ThoughtInput!): Thought
     addComment(thoughtId: ID!, commentText: String!): Thought
     removeThought(thoughtId: ID!): Thought
     removeComment(thoughtId: ID!, commentId: ID!): Thought
+    removeGame(gameId: ID!): Game
   }
+  
+
 `;
 
 export default typeDefs;

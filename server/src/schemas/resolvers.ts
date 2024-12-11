@@ -1,4 +1,5 @@
-import { Thought, User } from '../models/index.js';
+
+import { Thought, User, Game } from '../models/index.js';
 import { signToken, AuthenticationError } from '../utils/auth.js';
 import { fetchGameData, searchGamesByName } from '../services/igdbServices.js';
 
@@ -44,6 +45,17 @@ interface GameArgs {
   gameId: string;
 }
 
+interface AddGameArgs {
+  input: {
+    id: string;
+    name: string;
+    description: string;
+    rating: number;
+    imageUrl: string;
+    status: string;
+  }
+}
+
 const resolvers = {
   Query: {
     users: async () => {
@@ -51,6 +63,12 @@ const resolvers = {
     },
     user: async (_parent: any, { username }: UserArgs) => {
       return User.findOne({ username }).populate('thoughts');
+    },
+    usergames: async () => {
+      return User.find().populate({
+        path: 'games.pressStart games.loading games.wellPlayed',
+        populate: { path: 'games' },
+      });
     },
     thoughts: async () => {
       return await Thought.find().sort({ createdAt: -1 });
@@ -60,7 +78,11 @@ const resolvers = {
     },
     me: async (_parent: any, _args: any, context: any) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('thoughts');
+        return User.findOne({ _id: context.user._id })
+          .populate('thoughts')
+          .populate('games.pressStart')
+          .populate('games.loading')
+          .populate('games.wellPlayed');
       }
       throw new AuthenticationError('Could not authenticate user.');
     },
@@ -189,7 +211,50 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
+    addGame: async (_parent: any, { input }: AddGameArgs, context: any) => {
+      if (context.user) {
+        const game = await Game.create({ ...input });
+        let updateField = '';
+        switch (input.status) {
+          case 'Press Start':
+            updateField = 'games.pressStart';
+            break;
+          case 'Loading':
+            updateField = 'games.loading';
+            break;
+          case 'Well Played':
+            updateField = 'games.wellPlayed';
+            break;
+          default:
+            throw new Error('Invalid game status');
+        }
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { [updateField]: game._id } }
+        );
+        return game;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    removeGame: async (_parent: any, { gameId }: GameArgs, context: any) => {
+      if (context.user) {
+        const game = await Game.findOneAndDelete({
+          _id: gameId,
+          name: context.user.username,
+        });
+        if (!game) {
+          throw new AuthenticationError('Thought not found');
+        }
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { games: game._id } }
+        );
+        return game;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
   },
 };
+
 
 export default resolvers;
