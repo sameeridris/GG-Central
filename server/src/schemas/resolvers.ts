@@ -198,7 +198,7 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
-    addGames: async (_parent: any, { input }: AddGameArgs, context: any) => {
+    addGame: async (_parent: any, { input }: AddGameArgs, context: any) => {
       if (context.user) {
         const game = await Game.create({ ...input });
         await User.findOneAndUpdate(
@@ -213,14 +213,14 @@ const resolvers = {
       if (context.user) {
         const game = await Game.findOneAndDelete({
           _id: gameId,
-          thoughtAuthor: context.user.username,
+          name: context.user.username,
         });
         if (!game) {
           throw new AuthenticationError('Thought not found');
         }
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { thoughts: game._id } }
+          { $pull: { games: game._id } }
         );
         return game;
       }

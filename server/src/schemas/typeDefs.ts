@@ -48,7 +48,7 @@ const typeDefs = `
     thoughts: [Thought]!
   }
 
-  type GameInput{
+  input GameInput{
     name: String!
     description: String!
     rating: String!
@@ -74,6 +74,8 @@ const typeDefs = `
     addComment(thoughtId: ID!, commentText: String!): Thought
     removeThought(thoughtId: ID!): Thought
     removeComment(thoughtId: ID!, commentId: ID!): Thought
+    addGame(input: GameInput!): Game
+    removeGame(gameId: ID!): Game
   }
 `;
 
