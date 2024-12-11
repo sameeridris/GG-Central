@@ -31,28 +31,18 @@ const typeDefs = `
     email: String!
     password: String!
   }
-  
+
   type Auth {
     token: ID!
     user: User
   }
 
   type Game {
-    _id: ID
+    id: ID!
     name: String!
     description: String!
-    rating: String!
-    imageURL: String!
-    status: String!
-    thoughts: [Thought]!
-  }
-
-  type GameInput{
-    name: String!
-    description: String!
-    rating: String!
-    imageURL: String!
-    status: String!
+    rating: Float
+    imageUrl: String
   }
 
   type Query {
