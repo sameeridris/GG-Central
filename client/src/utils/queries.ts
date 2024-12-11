@@ -80,3 +80,17 @@ export const QUERY_SINGLE_GAME = gql`
     }
   }
 `;
+
+
+export const ADD_GAME_TO_LIBRARY = gql`
+  mutation addGameToLibrary($gameInput: GameInput!) {
+    addGame(input: $gameInput) {
+      id
+      name
+      description
+      rating
+      imageUrl
+      status
+    }
+  }
+`;

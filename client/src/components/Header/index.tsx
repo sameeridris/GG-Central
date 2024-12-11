@@ -1,13 +1,10 @@
-// src/components/Header/index.tsx
-
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { MouseEvent } from 'react';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import debounce from 'lodash.debounce';
 import Auth from '../../utils/auth';
-import { SEARCH_GAMES } from '../../utils/queries';
-import { ADD_GAME_TO_LIBRARY } from '../../utils/mutations';
+import { SEARCH_GAMES, ADD_GAME_TO_LIBRARY } from '../../utils/queries';
 import './index.css';
 
 const Header = () => {
@@ -26,7 +23,7 @@ const Header = () => {
       } else {
         setShowSuggestions(false);
       }
-    }, 500),
+    }, 1000),
     [searchGames]
   );
 
@@ -42,17 +39,20 @@ const Header = () => {
     setShowSuggestions(false);
   };
 
-  const handleAddToLibrary = (
-    game: any,
-    e: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    e.stopPropagation();
+  const handleAddToLibrary = (game: any, status: string) => {
     if (!Auth.loggedIn()) {
       navigate('/login');
     } else {
-      addGameToLibrary({ variables: { gameInput: game } })
+      addGameToLibrary({
+        variables: {
+          gameInput: {
+            ...game,
+            status,
+          },
+        },
+      })
         .then(() => {
-          alert(`${game.name} has been added to your library!`);
+          alert(`${game.name} has been added to your ${status} library!`);
         })
         .catch((err) => {
           console.error('Error adding game to library:', err);
@@ -66,6 +66,7 @@ const Header = () => {
     Auth.logout();
   };
 
+  // Close suggestions when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -98,9 +99,7 @@ const Header = () => {
         {showSuggestions && (
           <div className="suggestions-container">
             {loading && <p className="search-loading">Loading...</p>}
-            {error && (
-              <p className="search-error">Error loading suggestions.</p>
-            )}
+            {error && <p className="search-error">Error loading suggestions.</p>}
             {data && data.searchGames && data.searchGames.length > 0 && (
               <ul className="suggestions-list">
                 {data.searchGames.map((game: any) => (
@@ -121,12 +120,11 @@ const Header = () => {
                     <div className="game-details">
                       <h4>{game.name}</h4>
                       {Auth.loggedIn() && (
-                        <button
-                          className="add-to-library-button"
-                          onClick={(e) => handleAddToLibrary(game, e)}
-                        >
-                          Add to Library
-                        </button>
+                        <div className="add-to-library-buttons">
+                          <button onClick={(e) => { e.stopPropagation(); handleAddToLibrary(game, 'Press Start'); }}>+</button>
+                          <button onClick={(e) => { e.stopPropagation(); handleAddToLibrary(game, 'Loading'); }}>+</button>
+                          <button onClick={(e) => { e.stopPropagation(); handleAddToLibrary(game, 'Well Played'); }}>+</button>
+                        </div>
                       )}
                     </div>
                   </li>
