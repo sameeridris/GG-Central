@@ -4,7 +4,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #ffe3a0;
+  background-color: #3A2F5C;
   padding: 10px 20px;
   color: white;
   position: relative;
@@ -15,7 +15,7 @@
   font-family: "Modak", system-ui;
   font-weight: 400;
   font-style: normal;
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   font-size: 2.5rem;
 }
 
@@ -93,7 +93,7 @@
 }
 
 .add-to-library-button {
-  background-color: #28a745;
+  background-color: #a7d225;
   color: #fff;
   border: none;
   padding: 5px 10px;
@@ -103,5 +103,5 @@
 }
 
 .add-to-library-button:hover {
-  background-color: #218838;
+  background-color: #a7d225;
 }

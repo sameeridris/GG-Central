@@ -24,17 +24,10 @@ const Footer: React.FC = () => {
           </button>
         )}
         <h4>
-          Made with{' '}
-          <span
-            className="emoji"
-            role="img"
-            aria-label="heart"
-            aria-hidden="false"
-          >
-            ❤️
-          </span>{' '}
-          by the GG team
+          
         </h4>
+        <a href="https://github.com/sameeridris/GG-Central" target="_blank"><img src="./asset/github.png" alt="Github" />
+            </a>
       </div>
     </footer>
   );
