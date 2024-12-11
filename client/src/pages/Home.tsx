@@ -19,7 +19,7 @@ const Home: React.FC = () => {
       <div className="home-container">
         {/* Press Start Column */}
         <div className="column-wrapper" onClick={handleBoxClick}>
-          <h2>Press Start</h2>
+          <h2>[ Press Start ]</h2>
           <div className="column not-yet-played">
             <div className="empty-state">
               <p>Please log in to start your catalog</p>
@@ -29,7 +29,7 @@ const Home: React.FC = () => {
 
         {/* Loading Column */}
         <div className="column-wrapper" onClick={handleBoxClick}>
-          <h2>Loading</h2>
+          <h2>[ Loading. . .]</h2>
           <div className="column playing">
             <div className="empty-state">
               <p>Please log in to start your catalog</p>
@@ -39,7 +39,7 @@ const Home: React.FC = () => {
 
         {/* Well Played Column */}
         <div className="column-wrapper" onClick={handleBoxClick}>
-          <h2>Well Played</h2>
+          <h2>[ Well Played ]</h2>
           <div className="column played">
             <div className="empty-state">
               <p>Please log in to start your catalog</p>

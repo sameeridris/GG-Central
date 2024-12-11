@@ -4,7 +4,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #ffffff;
+  background-color: #3A2F5C;
   padding: 10px 20px;
   color: white;
   position: relative;
@@ -15,7 +15,7 @@
   font-family: "Modak", system-ui;
   font-weight: 400;
   font-style: normal;
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   font-size: 2.5rem;
 }
 
@@ -92,6 +92,10 @@
   color: #000;
 }
 
+<<<<<<< HEAD
+.add-to-library-button {
+  background-color: #a7d225;
+=======
 .add-to-library-buttons {
   display: flex;
   gap: 5px;
@@ -100,6 +104,7 @@
 
 .add-to-library-buttons button {
   background-color: #000000;
+>>>>>>> baf9a1d535638c659bba4c8ac3d6ee252f768dc8
   color: #fff;
   border: none;
   padding: 5px 10px;
@@ -107,6 +112,11 @@
   cursor: pointer;
 }
 
+<<<<<<< HEAD
+.add-to-library-button:hover {
+  background-color: #a7d225;
+}
+=======
 .add-to-library-buttons button:hover {
   background-color: #333;
 }
@@ -123,3 +133,4 @@
 .add-to-library-buttons button:nth-child(3) {
   background-color: #ddffdd; /* Green for Well Played */
 }
+>>>>>>> baf9a1d535638c659bba4c8ac3d6ee252f768dc8
