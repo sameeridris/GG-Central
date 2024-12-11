@@ -1,20 +1,39 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
-import '../style/SingleGame.css'; 
-import { QUERY_SINGLE_GAME } from '../utils/queries';
-
-// Correcting the type definition
-type GameParams = {
-  id: string | undefined;
-};
+import { useParams, useNavigate } from 'react-router-dom';
+import { useQuery, useMutation } from '@apollo/client';
+import { QUERY_SINGLE_GAME, ADD_GAME_TO_LIBRARY } from '../utils/queries';
+import Auth from '../utils/auth';
+import '../style/SingleGame.css';
 
 const SingleGame: React.FC = () => {
-  const { id } = useParams<GameParams>();
-
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate(); // Define navigate here
   const { loading, error, data } = useQuery(QUERY_SINGLE_GAME, {
     variables: { gameId: id },
   });
+  const [addGameToLibrary] = useMutation(ADD_GAME_TO_LIBRARY);
+
+  const handleAddToLibrary = (status: string) => {
+    if (!Auth.loggedIn()) {
+      navigate('/login');
+    } else {
+      addGameToLibrary({
+        variables: {
+          gameInput: {
+            ...data.game, // Ensure data.game is correctly referenced
+            status,
+          },
+        },
+      })
+        .then(() => {
+          alert(`${data.game.name} has been added to your ${status} library!`);
+        })
+        .catch((err) => {
+          console.error('Error adding game to library:', err);
+          alert('Failed to add game to library.');
+        });
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -30,7 +49,6 @@ const SingleGame: React.FC = () => {
   }
 
   const game = data.game;
-  console.log(game);
 
   return (
     <div className="game-details-container my-3">
@@ -46,6 +64,13 @@ const SingleGame: React.FC = () => {
           <h1>{game.name}</h1>
           <p>{game.description || 'No description available.'}</p>
           {game.rating && <p className="game-rating">Rating: {game.rating}</p>}
+          {Auth.loggedIn() && (
+            <div className="add-to-library-buttons">
+              <button onClick={() => handleAddToLibrary('Press Start')}>Add to Press Start</button>
+              <button onClick={() => handleAddToLibrary('Loading')}>Add to Loading</button>
+              <button onClick={() => handleAddToLibrary('Well Played')}>Add to Well Played</button>
+            </div>
+          )}
         </div>
       </div>
     </div>
