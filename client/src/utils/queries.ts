@@ -43,21 +43,7 @@ export const QUERY_SINGLE_THOUGHT = gql`
   }
 `;
 
-export const QUERY_ME = gql`
-  query me {
-    me {
-      _id
-      username
-      email
-      thoughts {
-        _id
-        thoughtText
-        thoughtAuthor
-        createdAt
-      }
-    }
-  }
-`;
+
 
 export const SEARCH_GAMES = gql`
   query searchGames($name: String!) {
@@ -69,14 +55,16 @@ export const SEARCH_GAMES = gql`
   }
 `;
 
+
 export const QUERY_SINGLE_GAME = gql`
-  query game($gameId: ID!) {
+  query singleGame($gameId: ID!) {
     game(gameId: $gameId) {
       id
       name
       description
       rating
       imageUrl
+      status # Ensure this field is fetched
     }
   }
 `;
@@ -84,13 +72,32 @@ export const QUERY_SINGLE_GAME = gql`
 
 export const ADD_GAME_TO_LIBRARY = gql`
   mutation addGameToLibrary($gameInput: GameInput!) {
-    addGame(input: $gameInput) {
+    addGameToLibrary(gameInput: $gameInput) {
       id
       name
       description
       rating
       imageUrl
-      status
+      status # Ensure this field is included in the mutation response
+    }
+  }
+`;
+
+
+export const QUERY_ME = gql`
+  query me {
+    me {
+      _id
+      username
+      email
+      games {
+        id
+        name
+        description
+        rating
+        imageUrl
+        status # Ensure this field is fetched
+      }
     }
   }
 `;

@@ -1,6 +1,7 @@
 import { Thought, User } from '../models/index.js';
 import { signToken, AuthenticationError } from '../utils/auth.js';
 import { fetchGameData, searchGamesByName } from '../services/igdbServices.js';
+import { Game } from '../models/index.js'; 
 
 interface AddUserArgs {
   input: {
@@ -105,6 +106,27 @@ const resolvers = {
     },
   },
   Mutation: {
+    addGameToLibrary: async (_parent: any, { gameInput }: { gameInput: any }, context: any) => {
+      if (!context.user) {
+        throw new AuthenticationError('You need to be logged in!');
+      }
+    
+      const game = await Game.findOneAndUpdate(
+        { id: gameInput.id },
+        { ...gameInput, $addToSet: { thoughts: [] } },
+        { new: true, upsert: true }
+      );
+    
+      await User.findOneAndUpdate(
+        { _id: context.user._id },
+        { $addToSet: { games: game._id } }
+      );
+    
+      return game;
+    },
+    
+    
+
     addUser: async (_parent: any, { input }: AddUserArgs) => {
       const user = await User.create({ ...input });
       const token = signToken(user.username, user.email, user._id);
