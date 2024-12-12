@@ -1,20 +1,21 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
-import { QUERY_SINGLE_GAME, ADD_GAME_TO_LIBRARY } from '../utils/queries';
+import { QUERY_SINGLE_GAME, ADD_GAME_TO_LIBRARY, QUERY_THOUGHTS } from '../utils/queries';
 import Auth from '../utils/auth';
+import ThoughtForm from '../components/ThoughtForm';
+import ThoughtList from '../components/ThoughtList';
 import '../style/SingleGame.css';
-
-
-
 
 const SingleGame: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate(); // Define navigate here
+  const navigate = useNavigate();
   const { loading, error, data } = useQuery(QUERY_SINGLE_GAME, {
     variables: { gameId: id },
   });
+  const { loading: commentsLoading, error: commentsError, data: commentsData } = useQuery(QUERY_THOUGHTS);
   const [addGameToLibrary] = useMutation(ADD_GAME_TO_LIBRARY);
+  // const [addThought] = useMutation(QUERY_THOUGHTS);
 
   const handleAddToLibrary = (status: string) => {
     if (!Auth.loggedIn()) {
@@ -23,7 +24,7 @@ const SingleGame: React.FC = () => {
       addGameToLibrary({
         variables: {
           gameInput: {
-            ...data.game, // Ensure data.game is correctly referenced
+            ...data.game,
             status,
           },
         },
@@ -38,12 +39,30 @@ const SingleGame: React.FC = () => {
     }
   };
 
-  if (loading) {
+  // const handleAddThought = (commentText: string) => {
+  //   if (!Auth.loggedIn()) {
+  //     navigate('/login');
+  //   } else {
+  //     addThought({
+  //       variables: {
+  //         thoughtId: id,
+  //         commentText,
+  //       },
+  //       refetchQueries: [{ query: QUERY_THOUGHTS }],
+  //     })
+  //       .catch((err) => {
+  //         console.error('Error adding comment:', err);
+  //         alert('Failed to add comment.');
+  //       });
+  //   }
+  // };
+
+  if (loading || commentsLoading) {
     return <div>Loading...</div>;
   }
 
-  if (error) {
-    console.error('Error fetching game:', error);
+  if (error || commentsError) {
+    console.error('Error fetching game or comments:', error || commentsError);
     return <div>Error loading game data. Please try again later.</div>;
   }
 
@@ -69,12 +88,17 @@ const SingleGame: React.FC = () => {
           {game.rating && <p className="game-rating">Rating: {game.rating}</p>}
           {Auth.loggedIn() && (
             <div className="add-to-library-buttons">
-              <button id='press-start-button' onClick={() => handleAddToLibrary('Press Start')}>Add to Press Start</button>
-              <button id='loading-button' onClick={() => handleAddToLibrary('Loading')}>Add to Loading</button>
-              <button id='well-played-button' onClick={() => handleAddToLibrary('Well Played')}>Add to Well Played</button>
+              <button onClick={() => handleAddToLibrary('Press Start')}>Add to Press Start</button>
+              <button onClick={() => handleAddToLibrary('Loading')}>Add to Loading</button>
+              <button onClick={() => handleAddToLibrary('Well Played')}>Add to Well Played</button>
             </div>
           )}
         </div>
+      </div>
+      <div className="comments-section">
+        <h2>Comments</h2>
+        {Auth.loggedIn() && <ThoughtForm />}
+        <ThoughtList thoughts={commentsData?.thoughts || []} title='Comments'/>
       </div>
     </div>
   );

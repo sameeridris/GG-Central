@@ -54,6 +54,16 @@ const typeDefs = `
     game(gameId: ID!): Game
     searchGames(name: String!): [Game]
   }
+  
+  input GameInput {
+    id: ID!
+    name: String!
+    description: String!
+    rating: Float
+    imageUrl: String
+    status: String!
+  }
+
 
   type Mutation {
     addUser(input: UserInput!): Auth
@@ -62,6 +72,7 @@ const typeDefs = `
     addComment(thoughtId: ID!, commentText: String!): Thought
     removeThought(thoughtId: ID!): Thought
     removeComment(thoughtId: ID!, commentId: ID!): Thought
+    addGameToLibrary(gameInput: GameInput!): Game
   }
 `;
 
