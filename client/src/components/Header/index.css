@@ -92,10 +92,6 @@
   color: #000;
 }
 
-<<<<<<< HEAD
-.add-to-library-button {
-  background-color: #a7d225;
-=======
 .add-to-library-buttons {
   display: flex;
   gap: 5px;
@@ -104,7 +100,6 @@
 
 .add-to-library-buttons button {
   background-color: #000000;
->>>>>>> baf9a1d535638c659bba4c8ac3d6ee252f768dc8
   color: #fff;
   border: none;
   padding: 5px 10px;
@@ -112,25 +107,22 @@
   cursor: pointer;
 }
 
-<<<<<<< HEAD
-.add-to-library-button:hover {
-  background-color: #a7d225;
-}
-=======
 .add-to-library-buttons button:hover {
   background-color: #333;
 }
 
 /* Styles for single game page */
 .add-to-library-buttons button:nth-child(1) {
-  background-color: #ffdddd; /* Red for Press Start */
+  background-color: #ffdddd;
+  /* Red for Press Start */
 }
 
 .add-to-library-buttons button:nth-child(2) {
-  background-color: #ddddff; /* Blue for Loading */
+  background-color: #ddddff;
+  /* Blue for Loading */
 }
 
 .add-to-library-buttons button:nth-child(3) {
-  background-color: #ddffdd; /* Green for Well Played */
+  background-color: #ddffdd;
+  /* Green for Well Played */
 }
->>>>>>> baf9a1d535638c659bba4c8ac3d6ee252f768dc8

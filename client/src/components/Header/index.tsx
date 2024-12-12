@@ -7,6 +7,19 @@ import Auth from '../../utils/auth';
 import { SEARCH_GAMES, ADD_GAME_TO_LIBRARY } from '../../utils/queries';
 import './index.css';
 
+
+const pressStartStyle = {
+  background: '#CBE770'
+}
+
+const playingStyle = {
+  background: '#B2D7D0'
+}
+
+const playedStyle = {
+  background: '#ddffdd'
+}
+
 const Header = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -121,9 +134,9 @@ const Header = () => {
                       <h4>{game.name}</h4>
                       {Auth.loggedIn() && (
                         <div className="add-to-library-buttons">
-                          <button onClick={(e) => { e.stopPropagation(); handleAddToLibrary(game, 'Press Start'); }}>+</button>
-                          <button onClick={(e) => { e.stopPropagation(); handleAddToLibrary(game, 'Loading'); }}>+</button>
-                          <button onClick={(e) => { e.stopPropagation(); handleAddToLibrary(game, 'Well Played'); }}>+</button>
+                          <button style={pressStartStyle} onClick={(e) => { e.stopPropagation(); handleAddToLibrary(game, 'Press Start'); }}>+</button>
+                          <button style={playingStyle} onClick={(e) => { e.stopPropagation(); handleAddToLibrary(game, 'Loading'); }}>+</button>
+                          <button style={playedStyle} onClick={(e) => { e.stopPropagation(); handleAddToLibrary(game, 'Well Played'); }}>+</button>
                         </div>
                       )}
                     </div>
