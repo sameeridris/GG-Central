@@ -15,8 +15,8 @@ const SingleGame: React.FC = () => {
   });
   const { loading: commentsLoading, error: commentsError, data: commentsData } = useQuery(QUERY_THOUGHTS);
   const [addGameToLibrary] = useMutation(ADD_GAME_TO_LIBRARY);
-  // const [addThought] = useMutation(QUERY_THOUGHTS);
-
+  
+  
   const handleAddToLibrary = (status: string) => {
     if (!Auth.loggedIn()) {
       navigate('/login');
@@ -24,7 +24,11 @@ const SingleGame: React.FC = () => {
       addGameToLibrary({
         variables: {
           gameInput: {
-            ...data.game,
+            id: data.game.id,
+            name: data.game.name,
+            description: data.game.description,
+            rating: data.game.rating,
+            imageUrl: data.game.imageUrl,
             status,
           },
         },
@@ -38,6 +42,8 @@ const SingleGame: React.FC = () => {
         });
     }
   };
+  
+  
 
   // const handleAddThought = (commentText: string) => {
   //   if (!Auth.loggedIn()) {

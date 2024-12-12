@@ -110,19 +110,22 @@ const resolvers = {
       if (!context.user) {
         throw new AuthenticationError('You need to be logged in!');
       }
-
+    
       const game = await Game.findOneAndUpdate(
         { id: gameInput.id },
-        { ...gameInput, $addToSet: { thoughts: [] } },  // Ensure thoughts is an array
-        { new: true, upsert: true }  // upsert: true creates a new doc if none matches the filter
+        { ...gameInput, $addToSet: { thoughts: [] } },
+        { new: true, upsert: true }
       );
-
+    
       await User.findOneAndUpdate(
         { _id: context.user._id },
-        { $addToSet: { games: game._id } }  // Add the game to the user's library
+        { $addToSet: { games: game._id } }
       );
+    
       return game;
     },
+    
+    
 
     addUser: async (_parent: any, { input }: AddUserArgs) => {
       const user = await User.create({ ...input });
