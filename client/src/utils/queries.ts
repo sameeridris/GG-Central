@@ -78,7 +78,7 @@ export const ADD_GAME_TO_LIBRARY = gql`
       description
       rating
       imageUrl
-      status # Ensure this field is included in the mutation response
+      status 
     }
   }
 `;
@@ -90,13 +90,13 @@ export const QUERY_ME = gql`
       _id
       username
       email
-      games {
+      game {
         id
         name
         description
         rating
         imageUrl
-        status # Ensure this field is fetched
+        status 
       }
     }
   }

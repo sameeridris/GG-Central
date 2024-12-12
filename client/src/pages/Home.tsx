@@ -16,10 +16,11 @@ interface Game {
   status: string;
 }
 
-const Home: React.FC = () => {
+const Home: React.FC = () => {console.log("a")
   const navigate = useNavigate();
-  const { loading, data } = useQuery(QUERY_ME);
-
+  console.log("b")
+  const { loading, data, error } = useQuery(QUERY_ME);
+console.log(loading,error,data)
   const handleBoxClick = () => {
     if (!Auth.loggedIn()) {
       navigate('/login');
@@ -31,10 +32,10 @@ const Home: React.FC = () => {
   }
 
   const user = data?.me || {};
-  const pressStartGames: Game[] = user.games?.filter((game: Game) => game.status === 'Press Start') || [];
-  const loadingGames: Game[] = user.games?.filter((game: Game) => game.status === 'Loading') || [];
-  const wellPlayedGames: Game[] = user.games?.filter((game: Game) => game.status === 'Well Played') || [];
-
+  const pressStartGames: Game[] = user.game?.filter((game: Game) => game.status === 'Press Start') || [];
+  const loadingGames: Game[] = user.game?.filter((game: Game) => game.status === 'Loading') || [];
+  const wellPlayedGames: Game[] = user.game?.filter((game: Game) => game.status === 'Well Played') || [];
+console.log
   return (
     <main>
       <div className="home-container">

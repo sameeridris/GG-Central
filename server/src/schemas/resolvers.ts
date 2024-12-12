@@ -59,9 +59,9 @@ const resolvers = {
     thought: async (_parent: any, { thoughtId }: ThoughtArgs) => {
       return await Thought.findOne({ _id: thoughtId });
     },
-    me: async (_parent: any, _args: any, context: any) => {
+    me: async (_parent: any, _args: any, context: any) => {console.log ("context",context)
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('thoughts');
+        return User.findOne({ _id: context.user._id }).populate('game');
       }
       throw new AuthenticationError('Could not authenticate user.');
     },
@@ -110,18 +110,21 @@ const resolvers = {
       if (!context.user) {
         throw new AuthenticationError('You need to be logged in!');
       }
-    
+    console.log ("hi")
       const game = await Game.findOneAndUpdate(
         { id: gameInput.id },
         { ...gameInput, $addToSet: { thoughts: [] } },
         { new: true, upsert: true }
       );
-    
+      console.log ("gane",game)
+const user =
       await User.findOneAndUpdate(
         { _id: context.user._id },
-        { $addToSet: { games: game._id } }
+        { $addToSet: { game: game._id } },
+        {new: true}
       );
-    
+      console.log ("lol",user)
+
       return game;
     },
     
