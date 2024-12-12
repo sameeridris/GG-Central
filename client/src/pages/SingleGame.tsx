@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
-import { QUERY_SINGLE_GAME, ADD_GAME_TO_LIBRARY, QUERY_THOUGHTS } from '../utils/queries';
+import { QUERY_SINGLE_GAME, ADD_GAME_TO_LIBRARY, QUERY_ME, QUERY_THOUGHTS } from '../utils/queries';
 import Auth from '../utils/auth';
 import ThoughtForm from '../components/ThoughtForm';
 import ThoughtList from '../components/ThoughtList';
@@ -10,13 +10,20 @@ import '../style/SingleGame.css';
 const SingleGame: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+
+  // Fetch game details
   const { loading, error, data } = useQuery(QUERY_SINGLE_GAME, {
     variables: { gameId: id },
   });
+
+  // Fetch comments
   const { loading: commentsLoading, error: commentsError, data: commentsData } = useQuery(QUERY_THOUGHTS);
-  const [addGameToLibrary] = useMutation(ADD_GAME_TO_LIBRARY);
-  
-  
+
+  // Mutation to add game to library
+  const [addGameToLibrary] = useMutation(ADD_GAME_TO_LIBRARY, {
+    refetchQueries: [{ query: QUERY_ME }],
+  });
+
   const handleAddToLibrary = (status: string) => {
     if (!Auth.loggedIn()) {
       navigate('/login');
@@ -29,7 +36,7 @@ const SingleGame: React.FC = () => {
             description: data.game.description,
             rating: data.game.rating,
             imageUrl: data.game.imageUrl,
-            status,
+            status: status || 'Press Start', // Use default value if status is missing
           },
         },
       })
@@ -42,26 +49,6 @@ const SingleGame: React.FC = () => {
         });
     }
   };
-  
-  
-
-  // const handleAddThought = (commentText: string) => {
-  //   if (!Auth.loggedIn()) {
-  //     navigate('/login');
-  //   } else {
-  //     addThought({
-  //       variables: {
-  //         thoughtId: id,
-  //         commentText,
-  //       },
-  //       refetchQueries: [{ query: QUERY_THOUGHTS }],
-  //     })
-  //       .catch((err) => {
-  //         console.error('Error adding comment:', err);
-  //         alert('Failed to add comment.');
-  //       });
-  //   }
-  // };
 
   if (loading || commentsLoading) {
     return <div>Loading...</div>;
@@ -104,7 +91,7 @@ const SingleGame: React.FC = () => {
       <div className="comments-section">
         <h2>Comments</h2>
         {Auth.loggedIn() && <ThoughtForm />}
-        <ThoughtList thoughts={commentsData?.thoughts || []} title='Comments'/>
+        <ThoughtList thoughts={commentsData?.thoughts || []} title='Comments' />
       </div>
     </div>
   );

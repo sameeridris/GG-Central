@@ -43,7 +43,7 @@ const typeDefs = `
     description: String!
     rating: Float
     imageUrl: String
-    status: String!
+    status: String
   }
 
   type Query {
