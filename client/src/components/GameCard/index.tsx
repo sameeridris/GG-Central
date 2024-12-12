@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './index.css'
 interface Game {
   id: string;
   name: string;
@@ -18,9 +18,7 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
     <div className="game-card">
       <img src={game.imageUrl} alt={game.name} />
       <h3>{game.name}</h3>
-      <p>{game.description}</p>
-      <p>Rating: {game.rating}</p>
-      <p>Status: {game.status}</p>
+
     </div>
   );
 };

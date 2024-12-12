@@ -4,7 +4,7 @@ const typeDefs = `
     username: String
     email: String
     password: String
-    thoughts: [Thought]!
+    game: [Game]!
   }
 
   type Thought {

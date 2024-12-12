@@ -81,7 +81,7 @@ const SingleGame: React.FC = () => {
           {game.rating && <p className="game-rating">Rating: {game.rating}</p>}
           {Auth.loggedIn() && (
             <div className="add-to-library-buttons">
-              <button onClick={() => handleAddToLibrary('Press Start')}>Add to Press Start</button>
+              <button onClick={() => handleAddToLibrary('Press Start')}> to Press Start</button>
               <button onClick={() => handleAddToLibrary('Loading')}>Add to Loading</button>
               <button onClick={() => handleAddToLibrary('Well Played')}>Add to Well Played</button>
             </div>
